@@ -1,0 +1,64 @@
+/*Удалить из однонаправленного списка все элементы, у которых последняя и
+предпоследняя цифры равны.*/
+
+struct list{
+int info;
+list *next;
+};
+void build(int x,list *&p){
+while(x){
+list *r=new list;
+r->info=x;
+r->next=p->next;
+p->next=r;
+p=r;
+cin>>x;
+}
+}
+void display(list *p){
+while(p!=NULL){
+cout<<p->info«" ";
+p=p->next;
+}
+}
+void del(list *p){
+list *r=p;
+p=p->next;
+delete r;
+}
+int main(){
+int x;
+list *head=NULL,*p,*r;
+cin>>x;
+head=new list;
+head->info=x;
+head->next=NULL;
+p=head;
+cin>>x;
+build(x,p);
+p=head;
+while (p->next != NULL)
+{
+if (p->next->info%10 == p->next->info%100/10){
+r = p->next;
+if (r->next!=NULL){
+p->next = r->next;
+delete[]r;
+}
+else {
+p->next = NULL;
+delete[]r; break;
+}
+}
+p = p->next;
+}
+if (head ->info%10 == head->info%100/10) {
+p = head;
+head = head ->next;
+delete[]p;
+}
+p=head;
+display(p);
+p=head;
+del( p);
+}*/
