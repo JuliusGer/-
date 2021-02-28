@@ -1,0 +1,65 @@
+/*Удалить все положительные элементы, за которыми следуют четные*/
+
+#include <iostream>
+using namespace std;
+struct list{
+    int info;
+    list *next;
+};
+void setlist(int x,list *&p){
+  while(x){
+    list *r=new list;
+    r->info=x;
+    r->next=p->next;
+    p->next=r;
+    p=r;
+    cin>>x;
+  }
+}
+void getlist(list *p){
+  while(p!=NULL){
+    cout<<p->info<<" ";
+    p=p->next;
+  }
+}
+void dellist(list *p){
+  list *r=p;
+  p=p->next;
+  delete r;
+}
+int main(){
+  int x;
+  list *head=NULL,*p,*r;
+  head=new list;
+  cin>>x;
+  head->info=x;
+  head->next=NULL;
+  p=head;
+  cin>>x;
+  setlist(x,p);
+  p=head;
+  while(p->next!=NULL&&p->next->next!=NULL){
+    if(p->next->info>0&&p->next->next->info%2==0){
+      r=p->next;
+      if(r->next!=NULL){
+        p->next=r->next;
+        delete r;
+      }
+      else{
+        p->next=NULL;
+        delete r;
+        break;
+      }
+    }
+    p=p->next;
+  }p=head;
+  if(head->info>0&&head->next->info%2==0){
+    r=head;
+    head=head->next;
+    delete r;
+  }
+  p=head;
+  getlist(p);
+  p=head;
+  dellist(p);
+}
