@@ -1,0 +1,85 @@
+/*Вставить минимальный элемент списка до каждого элемента с четной суммой цифр
+(функция – сумма цифр)*/
+
+#include <iostream>
+using namespace std;
+
+struct list{
+    int info;
+    list *next;
+};
+void setlist(int x,list *&p){
+    while(x){
+        list *r=new list;
+        r->info=x;
+        r->next=p->next;
+        p->next=r;
+        p=r;
+        cin>>x;
+    }
+}
+void getlist(list *p){
+    while(p!=NULL){
+        cout<<p->info<<" ";
+        p=p->next;
+    }
+}
+void dellist(list *p){
+    while(p!=NULL){
+        list *r=p;
+        p=p->next;
+        delete r;
+    }
+}
+int sum(int a){
+    int s=0;
+    while(a){
+        s+=a%10;
+        a=a/10;
+    }
+    return s;
+}
+int main(){
+    int x,min;
+    list *head=NULL,*p,*r;
+    cin>>x;
+    min=x;
+    head=new list;
+    head->info=x;
+    head->next=NULL;
+    p=head;
+    cin>>x;
+    //построим список вручную, а не через функцию, чтобы легче было искать main
+    while(x){
+        r=new list;
+        r->info=x;
+        r->next=p->next;
+        p->next=r;
+        p=r;
+        if(x<min)
+        min=x;
+        cin>>x;
+    }
+    p=head;
+    while(p->next!=NULL){
+        if(sum(p->next->info)%2==0){
+            list *r=new list;
+            r->info=min;
+            r->next=p->next;
+            p->next=r;
+            p=r;
+        }
+        p=p->next;
+    }
+    p=head;
+    if(sum(head->info)%2==0){
+        r=new list;
+        r->info=min;
+        r->next=head;
+        head=r;
+    }
+    p=head;
+    getlist(p);
+    p=head;
+    dellist(p);
+}
